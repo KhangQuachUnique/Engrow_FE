@@ -1,3 +1,4 @@
+import { appConstants } from "@/share/constants/appConstants";
 import axios from "axios";
 
 export const api = axios.create({
@@ -27,7 +28,7 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       localStorage.removeItem("accessToken");
-      window.location.href = "/login";
+      window.location.href = appConstants.LOGIN;
     }
     return Promise.reject(error);
   },

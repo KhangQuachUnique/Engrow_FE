@@ -1,14 +1,15 @@
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../services/login";
-import type { LoginPayload } from "../../types/loginPayload";
+import type { LoginRequestDto } from "../../types/auth.dto";
 import { AuthErrorHandler } from "../../utils/authErrors";
+import { appConstants } from "@/share/constants/appConstants";
 
 export const useLogin = () => {
   const navigate = useNavigate();
 
   return useMutation({
-    mutationFn: async (payload: LoginPayload) => {
+    mutationFn: async (payload: LoginRequestDto) => {
       const response = await login(payload);
       if (response.data.accessToken) {
         localStorage.setItem("accessToken", response.data.accessToken);
@@ -17,7 +18,7 @@ export const useLogin = () => {
     },
     onSuccess: () => {
       // Redirect to dashboard after successful login
-      navigate("/dashboard", { replace: true });
+      navigate(appConstants.DASHBOARD, { replace: true });
     },
     onError: (error) => {
       // Error will be handled in component via error state

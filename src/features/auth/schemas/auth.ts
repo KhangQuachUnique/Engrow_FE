@@ -1,8 +1,5 @@
 import { z } from "zod";
 
-/**
- * Login Form Schema
- */
 export const loginSchema = z.object({
   email: z.string().min(1, "Email là bắt buộc").email("Email không hợp lệ"),
   password: z
@@ -14,9 +11,6 @@ export const loginSchema = z.object({
 
 export type LoginFormData = z.infer<typeof loginSchema>;
 
-/**
- * Register Form Schema
- */
 export const registerSchema = z
   .object({
     email: z.string().min(1, "Email là bắt buộc").email("Email không hợp lệ"),

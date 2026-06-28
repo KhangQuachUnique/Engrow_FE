@@ -1,6 +1,4 @@
-/**
- * Auth error types and utilities
- */
+import { isAxiosError } from "axios";
 
 export interface AuthError {
   code: string;
@@ -8,24 +6,25 @@ export interface AuthError {
   statusCode?: number;
 }
 
+interface AuthErrorResponse {
+  code?: string;
+  message?: string;
+}
+
 export class AuthErrorHandler {
   static parse(error: unknown): AuthError {
-    // Axios error
-    if (error && typeof error === "object" && "response" in error) {
-      const axiosError = error as any;
-      const status = axiosError.response?.status;
-      const data = axiosError.response?.data;
+    if (isAxiosError<AuthErrorResponse>(error)) {
+      const status = error.response?.status;
+      const data = error.response?.data;
 
-      // API error with message
       if (data?.message) {
         return {
-          code: data.code || `ERROR_${status}`,
+          code: data.code || (status ? `ERROR_${status}` : "ERROR"),
           message: data.message,
           statusCode: status,
         };
       }
 
-      // Generic HTTP errors
       const messages: Record<number, string> = {
         400: "Thông tin không hợp lệ",
         401: "Email hoặc mật khẩu không đúng",
@@ -36,13 +35,12 @@ export class AuthErrorHandler {
       };
 
       return {
-        code: `HTTP_${status}`,
-        message: messages[status] || "Có lỗi xảy ra",
+        code: status ? `HTTP_${status}` : "HTTP_ERROR",
+        message: status ? messages[status] || "Có lỗi xảy ra" : "Có lỗi xảy ra",
         statusCode: status,
       };
     }
 
-    // Network error
     if (error && typeof error === "object" && "message" in error) {
       const err = error as Error;
       if (err.message.includes("timeout")) {
@@ -59,7 +57,6 @@ export class AuthErrorHandler {
       }
     }
 
-    // Unknown error
     return {
       code: "UNKNOWN_ERROR",
       message: "Có lỗi không xác định xảy ra",
