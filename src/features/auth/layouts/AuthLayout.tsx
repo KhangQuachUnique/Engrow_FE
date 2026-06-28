@@ -129,7 +129,7 @@ export default function AuthLayout({
   );
 
   const descriptionClass = cn(
-    "m-0 font-sans text-lg font-normal leading-7",
+    "m-0 font-sans text-md font-normal leading-7",
     "text-text-main",
   );
 

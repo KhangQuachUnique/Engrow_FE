@@ -2,18 +2,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import {
-  HiOutlineArrowRight,
-  HiOutlineAtSymbol,
-  HiOutlineLockClosed,
-} from "react-icons/hi2";
+import { HiOutlineAtSymbol, HiOutlinePaperAirplane } from "react-icons/hi2";
 import Button from "@/share/components/Button";
 import Input from "@/share/components/Input";
 import { appConstants } from "@/share/constants/appConstants";
 import { cn } from "@/share/utils/cn";
-import { loginSchema, type LoginFormData } from "../../schemas/auth";
-import { useLogin } from "../../hooks/mutations/useLogin";
-import type { LoginRequestDto } from "../../types/auth.dto";
+import {
+  registerEmailSchema,
+  type RegisterEmailFormData,
+} from "../../schemas/auth";
+import { useSendRegisterOtp } from "../../hooks/mutations/useSendRegisterOtp";
 import { AuthErrorHandler } from "../../utils/authErrors";
 import { useNavigate } from "react-router-dom";
 
@@ -28,34 +26,47 @@ const SOCIAL_PROVIDERS = [
   },
 ] as const;
 
-export default function LoginForm() {
-  const loginMutation = useLogin();
+interface RegisterEmailStepProps {
+  onSent: (email: string) => void;
+  testMode?: boolean;
+}
+
+export default function RegisterEmailStep({
+  onSent,
+  testMode = false,
+}: RegisterEmailStepProps) {
+  const sendOtpMutation = useSendRegisterOtp();
   const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema),
+  } = useForm<RegisterEmailFormData>({
+    resolver: zodResolver(registerEmailSchema),
     defaultValues: {
       email: "",
-      password: "",
-      rememberMe: false,
     },
   });
 
-  const onSubmit = (data: LoginFormData) => {
-    const payload: LoginRequestDto = {
-      email: data.email,
-      password: data.password,
-    };
+  const onSubmit = (data: RegisterEmailFormData) => {
+    if (testMode) {
+      onSent(data.email);
+      return;
+    }
 
-    loginMutation.mutate(payload);
+    sendOtpMutation.mutate(
+      {
+        email: data.email,
+      },
+      {
+        onSuccess: () => onSent(data.email),
+      },
+    );
   };
 
-  const apiError = loginMutation.error
-    ? AuthErrorHandler.getMessage(loginMutation.error)
+  const apiError = sendOtpMutation.error
+    ? AuthErrorHandler.getMessage(sendOtpMutation.error)
     : "";
 
   const apiErrorClass = cn(
@@ -65,8 +76,6 @@ export default function LoginForm() {
   );
 
   const formClass = cn("flex flex-col gap-5");
-
-  const fieldsClass = cn("flex flex-col gap-4");
 
   const submitIconClass = cn("h-5 w-5");
 
@@ -87,7 +96,7 @@ export default function LoginForm() {
 
   const socialIconClass = cn("h-5 w-5 flex-none");
 
-  const signupClass = cn(
+  const signinClass = cn(
     "m-0 pt-1 text-center font-sans text-sm font-normal leading-5",
     "text-text-main",
     "[&_a]:ml-1 [&_a]:font-bold [&_a]:text-brand [&_a]:no-underline",
@@ -98,42 +107,28 @@ export default function LoginForm() {
       {apiError && <p className={apiErrorClass}>{apiError}</p>}
 
       <form className={formClass} onSubmit={handleSubmit(onSubmit)}>
-        <div className={fieldsClass}>
-          <Input
-            id="email"
-            type="email"
-            icon={HiOutlineAtSymbol}
-            label="Email"
-            disabled={loginMutation.isPending}
-            error={errors.email?.message}
-            placeholder="Enter your email"
-            {...register("email")}
-          />
-
-          <Input
-            id="password"
-            type="password"
-            icon={HiOutlineLockClosed}
-            label="Password"
-            disabled={loginMutation.isPending}
-            error={errors.password?.message}
-            placeholder="••••••••"
-            action={<a href="/forgot-password">Forgot password?</a>}
-            {...register("password")}
-          />
-        </div>
+        <Input
+          id="register-email"
+          type="email"
+          icon={HiOutlineAtSymbol}
+          label="Email"
+          disabled={sendOtpMutation.isPending}
+          error={errors.email?.message}
+          placeholder="Enter your email"
+          {...register("email")}
+        />
 
         <Button
           type="submit"
-          className="min-h-12.5 w-full px-5.5 py-2.75 font-heading text-lg leading-7"
-          disabled={loginMutation.isPending}
+          className="min-h-[50px] w-full px-[22px] py-[11px] font-heading text-lg leading-7"
+          disabled={sendOtpMutation.isPending}
           iconRight={
-            <HiOutlineArrowRight
+            <HiOutlinePaperAirplane
               aria-hidden="true"
               className={submitIconClass}
             />
           }>
-          {loginMutation.isPending ? "Signing in" : "Sign In"}
+          {sendOtpMutation.isPending ? "Sending OTP" : "Send OTP"}
         </Button>
       </form>
 
@@ -155,12 +150,12 @@ export default function LoginForm() {
         ))}
       </div>
 
-      <p className={signupClass}>
-        Don't have an account?{" "}
+      <p className={signinClass}>
+        Already have an account?{" "}
         <span
-          onClick={() => navigate(appConstants.REGISTER)}
+          onClick={() => navigate(appConstants.LOGIN)}
           className="cursor-pointer font-bold text-brand hover:underline">
-          Sign up for free
+          Sign in
         </span>
       </p>
     </>

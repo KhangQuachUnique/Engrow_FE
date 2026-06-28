@@ -28,14 +28,16 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 
     const inputClass = cn(
       "h-12 w-full rounded-[18px] border bg-white",
-      "border-border-soft px-4 py-[13px]",
+      error
+        ? "border-red-400/75 focus:border-red-400/80 focus:shadow-[0_1px_2px_rgba(0,0,0,0.05),0_0_0_4px_rgba(239,68,68,0.14)]"
+        : "border-border-soft focus:border-brand/80 focus:shadow-[0_1px_2px_rgba(0,0,0,0.05),0_0_0_4px_rgba(58,190,249,0.14)]",
+      "px-4 py-[13px]",
       Icon ? "pl-[42px]" : "pl-4",
       "font-sans text-[15px] font-normal text-text-strong",
       "shadow-[0_1px_2px_rgba(0,0,0,0.05)] outline-none",
       "placeholder:text-text-muted/40",
-      "focus:border-brand/80 focus:shadow-[0_1px_2px_rgba(0,0,0,0.05),0_0_0_4px_rgba(58,190,249,0.14)]",
-      "aria-invalid:border-[rgba(239,68,68,0.75)]",
       "disabled:cursor-not-allowed disabled:opacity-65",
+      "transition-all duration-200",
       className,
     );
 
@@ -46,7 +48,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 
     const errorClass = cn(
       "font-sans text-[13px] font-medium leading-[18px]",
-      "text-red-600",
+      "text-red-500",
     );
 
     return (

@@ -1,30 +1,45 @@
 import { z } from "zod";
 
 export const loginSchema = z.object({
-  email: z.string().min(1, "Email là bắt buộc").email("Email không hợp lệ"),
+  email: z.string().min(1, "Email is required").email("Email is invalid"),
   password: z
     .string()
-    .min(1, "Mật khẩu là bắt buộc")
-    .min(6, "Mật khẩu phải có ít nhất 6 ký tự"),
+    .min(1, "Password is required")
+    .min(6, "Password must be at least 6 characters"),
   rememberMe: z.boolean(),
 });
 
 export type LoginFormData = z.infer<typeof loginSchema>;
 
-export const registerSchema = z
+export const registerEmailSchema = z.object({
+  email: z.string().min(1, "Email is required").email("Email is invalid"),
+});
+
+export type RegisterEmailFormData = z.infer<typeof registerEmailSchema>;
+
+export const registerOtpSchema = z.object({
+  otp: z
+    .string()
+    .min(6, "OTP must be 6 digits")
+    .max(6, "OTP must be 6 digits")
+    .regex(/^\d+$/, "OTP must contain digits only"),
+});
+
+export type RegisterOtpFormData = z.infer<typeof registerOtpSchema>;
+
+export const registerProfileSchema = z
   .object({
-    email: z.string().min(1, "Email là bắt buộc").email("Email không hợp lệ"),
+    fullName: z.string().min(2, "Full name must be at least 2 characters"),
     password: z
       .string()
-      .min(6, "Mật khẩu phải có ít nhất 6 ký tự")
-      .regex(/[A-Z]/, "Mật khẩu phải chứa ít nhất một chữ cái viết hoa")
-      .regex(/[0-9]/, "Mật khẩu phải chứa ít nhất một chữ số"),
+      .min(6, "Password must be at least 6 characters")
+      .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+      .regex(/[0-9]/, "Password must contain at least one number"),
     confirmPassword: z.string(),
-    fullName: z.string().min(2, "Tên phải có ít nhất 2 ký tự"),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "Mật khẩu không khớp",
+    message: "Passwords do not match",
     path: ["confirmPassword"],
   });
 
-export type RegisterFormData = z.infer<typeof registerSchema>;
+export type RegisterProfileFormData = z.infer<typeof registerProfileSchema>;
