@@ -110,8 +110,10 @@ export default function RegisterProfileStep({
         <Button
           type="submit"
           className="min-h-[50px] w-full px-[22px] py-[11px] font-heading text-lg leading-7"
-          disabled={registerMutation.isPending}>
-          {registerMutation.isPending ? "Signing up" : "Sign up"}
+          disabled={registerMutation.isPending}
+          loading={registerMutation.isPending}
+          loadingText="Signing up">
+          Sign up
         </Button>
       </form>
     </>
