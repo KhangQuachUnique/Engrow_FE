@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { MemoryRouter } from "react-router-dom";
 import Button from "./Button";
 
 const meta = {
@@ -34,4 +35,25 @@ export const Disabled: Story = {
   args: {
     disabled: true,
   },
+};
+
+export const Loading: Story = {
+  args: {
+    loading: true,
+    loadingText: "Saving",
+  },
+};
+
+export const LinkButton: Story = {
+  args: {
+    children: "Go home",
+    to: "/",
+  },
+  decorators: [
+    (Story) => (
+      <MemoryRouter>
+        <Story />
+      </MemoryRouter>
+    ),
+  ],
 };
