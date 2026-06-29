@@ -7,8 +7,8 @@ import {
   HiOutlineAtSymbol,
   HiOutlineLockClosed,
 } from "react-icons/hi2";
-import Button from "@/share/components/Button";
-import Input from "@/share/components/Input";
+import Button from "@/share/components/Button/Button";
+import Input from "@/share/components/Input/Input";
 import { appConstants } from "@/share/constants/appConstants";
 import { cn } from "@/share/utils/cn";
 import { loginSchema, type LoginFormData } from "../../schemas/auth";

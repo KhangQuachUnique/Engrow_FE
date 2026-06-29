@@ -1,7 +1,7 @@
 import type { KeyboardEvent } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, useWatch } from "react-hook-form";
-import Button from "@/share/components/Button";
+import Button from "@/share/components/Button/Button";
 import { cn } from "@/share/utils/cn";
 import {
   registerOtpSchema,

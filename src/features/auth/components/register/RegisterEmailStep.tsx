@@ -3,8 +3,8 @@ import { useForm } from "react-hook-form";
 import { FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { HiOutlineAtSymbol, HiOutlinePaperAirplane } from "react-icons/hi2";
-import Button from "@/share/components/Button";
-import Input from "@/share/components/Input";
+import Button from "@/share/components/Button/Button";
+import Input from "@/share/components/Input/Input";
 import { appConstants } from "@/share/constants/appConstants";
 import { cn } from "@/share/utils/cn";
 import {
