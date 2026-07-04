@@ -122,13 +122,15 @@ export default function RegisterEmailStep({
           type="submit"
           className="min-h-[50px] w-full px-[22px] py-[11px] font-heading text-lg leading-7"
           disabled={sendOtpMutation.isPending}
+          loading={sendOtpMutation.isPending}
+          loadingText="Sending OTP"
           iconRight={
             <HiOutlinePaperAirplane
               aria-hidden="true"
               className={submitIconClass}
             />
           }>
-          {sendOtpMutation.isPending ? "Sending OTP" : "Send OTP"}
+          Send OTP
         </Button>
       </form>
 

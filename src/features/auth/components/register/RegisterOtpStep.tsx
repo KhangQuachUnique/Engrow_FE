@@ -152,8 +152,10 @@ export default function RegisterOtpStep({
         <Button
           type="submit"
           className="min-h-[50px] w-full px-[22px] py-[11px] font-heading text-lg leading-7"
-          disabled={verifyOtpMutation.isPending}>
-          {verifyOtpMutation.isPending ? "Verifying" : "Verify Email"}
+          disabled={verifyOtpMutation.isPending}
+          loading={verifyOtpMutation.isPending}
+          loadingText="Verifying">
+          Verify Email
         </Button>
       </form>
 

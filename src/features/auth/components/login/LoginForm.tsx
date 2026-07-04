@@ -127,13 +127,15 @@ export default function LoginForm() {
           type="submit"
           className="min-h-12.5 w-full px-5.5 py-2.75 font-heading text-lg leading-7"
           disabled={loginMutation.isPending}
+          loading={loginMutation.isPending}
+          loadingText="Signing in"
           iconRight={
             <HiOutlineArrowRight
               aria-hidden="true"
               className={submitIconClass}
             />
           }>
-          {loginMutation.isPending ? "Signing in" : "Sign In"}
+          Sign In
         </Button>
       </form>
 
