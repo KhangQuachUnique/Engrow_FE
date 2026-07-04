@@ -4,6 +4,7 @@ import RegisterPage from "@/features/auth/pages/RegisterPage";
 import DashboardPage from "@/pages/DashboardPage";
 import ForbiddenPage from "@/pages/ForbiddenPage";
 import NotFoundPage from "@/pages/NotFoundPage";
+import ProfilePage from "@/pages/profile/ProfilePage";
 import ServerErrorPage from "@/pages/ServerErrorPage";
 import { appConstants } from "@/share/constants/appConstants";
 import MainLayout from "@/share/layouts/MainLayout";
@@ -14,6 +15,14 @@ export const router = createBrowserRouter([
     element: (
       <MainLayout>
         <DashboardPage />
+      </MainLayout>
+    ),
+  },
+  {
+    path: appConstants.PROFILE,
+    element: (
+      <MainLayout>
+        <ProfilePage />
       </MainLayout>
     ),
   },

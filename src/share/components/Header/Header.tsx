@@ -8,6 +8,7 @@ import {
 import { Link } from "react-router-dom";
 import logo from "@/assets/Logo.webp";
 import Avatar from "@/share/components/Avatar/Avatar";
+import { appConstants } from "@/share/constants/appConstants";
 import { cn } from "@/share/utils/cn";
 
 const NAV_ITEMS = ["My progress", "Home", "Join class"];
@@ -16,7 +17,7 @@ const ACCOUNT_ITEMS = [
   {
     icon: HiOutlineUserCircle,
     label: "Profile",
-    onClick: () => {},
+    to: appConstants.PROFILE,
   },
   {
     icon: HiOutlineCog6Tooth,
@@ -26,7 +27,7 @@ const ACCOUNT_ITEMS = [
   {
     icon: HiOutlineArrowRightOnRectangle,
     label: "Logout",
-    to: "/login",
+    to: appConstants.LOGIN,
   },
 ] as const;
 
