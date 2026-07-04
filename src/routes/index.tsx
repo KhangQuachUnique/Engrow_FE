@@ -6,11 +6,16 @@ import ForbiddenPage from "@/pages/ForbiddenPage";
 import NotFoundPage from "@/pages/NotFoundPage";
 import ServerErrorPage from "@/pages/ServerErrorPage";
 import { appConstants } from "@/share/constants/appConstants";
+import MainLayout from "@/share/layouts/MainLayout";
 
 export const router = createBrowserRouter([
   {
     path: appConstants.DASHBOARD,
-    element: <DashboardPage />,
+    element: (
+      <MainLayout>
+        <DashboardPage />
+      </MainLayout>
+    ),
   },
   {
     path: appConstants.LOGIN,
