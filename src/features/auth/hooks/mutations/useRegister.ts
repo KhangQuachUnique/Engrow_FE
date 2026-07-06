@@ -19,7 +19,7 @@ export const useRegister = () => {
       return response;
     },
     onSuccess: () => {
-      navigate(appConstants.DASHBOARD, { replace: true });
+      navigate(appConstants.HOME, { replace: true });
     },
     onError: (error) => {
       console.error("Register failed:", AuthErrorHandler.parse(error));

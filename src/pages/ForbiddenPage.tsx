@@ -45,7 +45,7 @@ export default function ForbiddenPage() {
               Sign in
             </Button>
             <Button
-              to={appConstants.DASHBOARD}
+              to={appConstants.HOME}
               variant="secondary"
               className="h-12 px-6 font-heading text-base leading-6 max-[560px]:w-full"
               iconLeft={<HiOutlineHome aria-hidden="true" />}>

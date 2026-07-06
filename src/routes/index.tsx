@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import LoginPage from "@/features/auth/pages/LoginPage";
 import RegisterPage from "@/features/auth/pages/RegisterPage";
-import DashboardPage from "@/pages/DashboardPage";
+import HomePage from "@/pages/HomePage";
 import ForbiddenPage from "@/pages/ForbiddenPage";
 import NotFoundPage from "@/pages/NotFoundPage";
 import ProfilePage from "@/pages/profile/ProfilePage";
@@ -11,10 +11,10 @@ import MainLayout from "@/share/layouts/MainLayout";
 
 export const router = createBrowserRouter([
   {
-    path: appConstants.DASHBOARD,
+    path: appConstants.HOME,
     element: (
       <MainLayout>
-        <DashboardPage />
+        <HomePage />
       </MainLayout>
     ),
   },

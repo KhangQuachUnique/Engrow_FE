@@ -1,7 +1,7 @@
 export const appConstants = {
   LOGIN: "/login",
   REGISTER: "/register",
-  DASHBOARD: "/",
+  HOME: "/",
   PROFILE: "/profile",
   FORBIDDEN: "/403",
   SERVER_ERROR: "/500",

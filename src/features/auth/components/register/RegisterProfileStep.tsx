@@ -47,7 +47,7 @@ export default function RegisterProfileStep({
     };
 
     if (testMode) {
-      navigate(appConstants.DASHBOARD, { replace: true });
+      navigate(appConstants.HOME, { replace: true });
       return;
     }
 
@@ -62,6 +62,10 @@ export default function RegisterProfileStep({
     "m-0 rounded-xl border border-red-500/20 bg-red-50/85 px-3.5 py-3",
     "font-sans text-[13px] font-medium leading-[18px]",
     "text-red-600",
+  );
+
+  const submitButtonClass = cn(
+    "min-h-12.5 w-full px-5.5 py-2.75 font-heading text-lg leading-7",
   );
 
   const formClass = cn("flex flex-col gap-5");
@@ -109,7 +113,7 @@ export default function RegisterProfileStep({
 
         <Button
           type="submit"
-          className="min-h-[50px] w-full px-[22px] py-[11px] font-heading text-lg leading-7"
+          className={submitButtonClass}
           disabled={registerMutation.isPending}
           loading={registerMutation.isPending}
           loadingText="Signing up">

@@ -41,7 +41,7 @@ export default function NotFoundPage() {
 
           <div className="flex flex-wrap gap-3 max-[560px]:w-full max-[560px]:flex-col">
             <Button
-              to={appConstants.DASHBOARD}
+              to={appConstants.HOME}
               className="h-12 px-6 font-heading text-base leading-6 max-[560px]:w-full"
               iconLeft={<HiOutlineArrowLeft aria-hidden="true" />}>
               Back to home
