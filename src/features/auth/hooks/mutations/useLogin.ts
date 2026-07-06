@@ -17,8 +17,8 @@ export const useLogin = () => {
       return response;
     },
     onSuccess: () => {
-      // Redirect to dashboard after successful login
-      navigate(appConstants.DASHBOARD, { replace: true });
+      // Redirect to home after successful login
+      navigate(appConstants.HOME, { replace: true });
     },
     onError: (error) => {
       // Error will be handled in component via error state

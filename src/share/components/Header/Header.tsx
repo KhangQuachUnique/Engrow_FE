@@ -5,13 +5,17 @@ import {
   HiOutlineCog6Tooth,
   HiOutlineUserCircle,
 } from "react-icons/hi2";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import logo from "@/assets/Logo.webp";
 import Avatar from "@/share/components/Avatar/Avatar";
 import { appConstants } from "@/share/constants/appConstants";
 import { cn } from "@/share/utils/cn";
 
-const NAV_ITEMS = ["My progress", "Home", "Join class"];
+const NAV_ITEMS = [
+  { label: "Home", to: appConstants.HOME },
+  { label: "Explore", to: "/explore" },
+  { label: "Join class", to: "/join-class" },
+] as const;
 
 const ACCOUNT_ITEMS = [
   {
@@ -33,6 +37,7 @@ const ACCOUNT_ITEMS = [
 
 export default function Header() {
   const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
   const accountMenuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -57,9 +62,23 @@ export default function Header() {
     };
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setHasScrolled(window.scrollY > 4);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   const headerClass = cn(
-    "sticky top-0 z-40 w-full border-b border-border-soft",
-    "bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85",
+    "sticky top-0 z-40 w-full border-b transition-colors duration-200",
+    hasScrolled ? "border-border-soft" : "border-transparent",
+    "bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/75",
   );
 
   const shellClass = cn(
@@ -107,13 +126,16 @@ export default function Header() {
           </Link>
 
           <div className={navClass}>
-            {NAV_ITEMS.map((item, index) => (
-              <Link
-                key={item}
-                to={index === 2 ? "/register" : "/"}
-                className={navLinkClass}>
-                {item}
-              </Link>
+            {NAV_ITEMS.map((item) => (
+              <NavLink
+                key={item.label}
+                to={item.to}
+                end={item.to === "/"}
+                className={({ isActive }) =>
+                  cn(navLinkClass, isActive && "text-brand")
+                }>
+                {item.label}
+              </NavLink>
             ))}
           </div>
         </div>

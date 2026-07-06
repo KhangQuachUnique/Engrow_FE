@@ -17,7 +17,7 @@ const FOOTER_SECTIONS = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-border-soft bg-white">
+    <footer className="bg-white">
       <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[minmax(0,1.7fr)_repeat(3,minmax(0,0.8fr))] lg:px-10 lg:py-14">
         <div className="max-w-[22rem]">
           <img src={logo} alt="Engrow" className="h-[60px] w-[120px] object-contain" />
