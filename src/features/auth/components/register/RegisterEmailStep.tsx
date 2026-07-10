@@ -38,6 +38,12 @@ export default function RegisterEmailStep({
   const sendOtpMutation = useSendRegisterOtp();
   const navigate = useNavigate();
 
+  const handleGoogleLogin = () => {
+    const baseUrl = import.meta.env.VITE_BASE_URL || "http://localhost:8080";
+    const redirectUri = `${window.location.origin}/oauth2/redirect`;
+    window.location.href = `${baseUrl}/oauth2/authorization/google?redirect_uri=${redirectUri}`;
+  };
+
   const {
     register,
     handleSubmit,
@@ -144,6 +150,7 @@ export default function RegisterEmailStep({
             iconLeft={
               <provider.icon aria-hidden="true" className={socialIconClass} />
             }
+            onClick={provider.label === "Google" ? handleGoogleLogin : undefined}
             variant="secondary">
             {provider.label}
           </Button>
